@@ -1,0 +1,10 @@
+/build/
+/bin/
+.gradle
+.idea
+*.iml
+*.class
+/out/
+*.xml
+*.bin
+*.lock
