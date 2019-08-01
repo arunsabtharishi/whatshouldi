@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group 'org.dragonfly'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    def springBootVersion = "2.0.1.RELEASE"
+
+    compile group: 'org.springframework.boot' , name: 'spring-boot-starter-actuator', version:springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version:springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version:springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version:springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: springBootVersion
+
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.490'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-core', version: '1.11.502'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-sqs', version: '1.11.502'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-secretsmanager', version: '1.11.510'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.11.503'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-core', version: '1.11.503'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-aws-messaging', version: '2.1.0.RELEASE'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-aws-context', version: '2.1.0.RELEASE'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.1.0.RELEASE'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-sts', version: '1.11.503'
+}
