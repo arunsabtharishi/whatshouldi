@@ -8,8 +8,7 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-    maven { url 'http://dc1udtlhart02.stack.qadev.corp:8081/artifactory/repositories' }
-    maven { url 'http://cds-artifactory.stack.qadev.corp:8081/artifactory/libs-snapshot-local' }
+    mavenCentral()
 }
 
 dependencies {
