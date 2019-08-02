@@ -15,6 +15,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     def springBootVersion = "2.1.0.RELEASE"
+    def springBootVersion = "2.1.6.RELEASE"
 
     compile group: 'org.springframework.boot' , name: 'spring-boot-starter-actuator', version:springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version:springBootVersion
@@ -33,4 +34,6 @@ dependencies {
     compile group: 'org.springframework.social', name: 'spring-social-core', version: '1.1.6.RELEASE'
     compile group: 'org.springframework.social', name: 'spring-social-config', version: '1.1.6.RELEASE'
     compile group: 'org.facebook4j', name: 'facebook4j-core', version: '2.1.0'
+
+    compile group: 'org.springframework.social', name: 'spring-social-twitter', version: '1.1.2.RELEASE'
 }
