@@ -28,8 +28,8 @@ public class TwitterController {
         return twitterService.searchTweet(searchStr1);
     }
     @GetMapping("/tweet/search/{searchStr1}/{searchStr2}")
-    public List<Tweet> searchTweetTwo(@PathVariable String searchStr1, @PathVariable String searchStr2) {
-        return twitterService.searchTweet(searchStr1, searchStr2);
+    public List<String> searchTweetTwo(@PathVariable String searchStr1, @PathVariable String searchStr2) {
+        return twitterService.searchTweetText(searchStr1, searchStr2);
     }
     @GetMapping("/tweet/search/{searchStr1}/{searchStr2}/{searchStr3}")
     public List<Tweet> searchTweetThree(@PathVariable String searchStr1, @PathVariable String searchStr2, @PathVariable String searchStr3) {

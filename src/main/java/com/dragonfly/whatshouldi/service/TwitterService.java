@@ -66,9 +66,22 @@ public class TwitterService {
         return null;
     }
 
+    public List<String> searchTweetText(Twitter twitter, String... searchStr) {
+
+        List<Tweet> tweets = searchTweet(twitter, searchStr);
+        return tweets.stream().map(tweet -> tweet.getText()).collect(Collectors.toList());
+
+    }
+
     public List<Tweet> searchTweet(String... searchStr) {
         Twitter twitterTemplate = twitterCreator.getTwitterTemplate("SpringAtSO");
 
         return searchTweet(twitterTemplate, searchStr);
+    }
+
+    public List<String> searchTweetText(String... searchStr) {
+        Twitter twitterTemplate = twitterCreator.getTwitterTemplate("SpringAtSO");
+
+        return searchTweetText(twitterTemplate, searchStr);
     }
 }
