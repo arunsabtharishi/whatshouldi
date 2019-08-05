@@ -1,23 +1,23 @@
 package com.dragonfly.whatshouldi.service;
 
+import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.GetItemRequest;
 import com.amazonaws.services.dynamodbv2.model.GetItemResult;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
 
 @Service
 public class LoginServiceImpl implements LoginService {
-    @Value("${amazon.aws.accesskey}")
+    @Value("${aws.service.accessKey}")
     private String awsAccessKey;
-    @Value("${amazon.aws.secretkey}")
+    @Value("${aws.service.secretKey}")
     private String awsSecretKey;
 
     @Override

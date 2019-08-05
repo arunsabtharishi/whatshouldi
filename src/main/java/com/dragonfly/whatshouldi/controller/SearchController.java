@@ -18,11 +18,11 @@ public class SearchController {
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ResponseBody
     public List<String> fetchData() {
-	System.out.println("fetch data");
-	List<String> searchResults = null;
-	// step 1: if eats to be searched in facebook  like then,
-	searchResults = faceBookImpl.retrieveFaceBookData();
-	return searchResults;
+    System.out.println("fetch data");
+    List<String> searchResults = null;
+    // step 1: if eats to be searched in facebook  like then,
+    searchResults = faceBookImpl.retrieveFaceBookData();
+    return searchResults;
     }
 
 }

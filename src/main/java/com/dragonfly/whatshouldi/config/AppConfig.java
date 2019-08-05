@@ -1,7 +1,7 @@
 package com.dragonfly.whatshouldi.config;
 
+import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,16 +16,15 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 
 @Configuration
-@ComponentScan(basePackages = { "com.dragonfly.whatshouldi" })
-@EnableConfigurationProperties
+@EnableDynamoDBRepositories(basePackages="com.dragonfly.whatshouldi.dynamodb.repository")
 public class AppConfig {
-	
+
     @Value("${aws.region}")
     private String region;
-    
+
     @Value("${aws.service.accessKey}")
     private String awsAccessKey;
-    
+
     @Value("${aws.service.secretKey}")
     private String awsSecretKey;
 
@@ -34,6 +33,7 @@ public class AppConfig {
         return new AWSStaticCredentialsProvider(new BasicAWSCredentials(awsAccessKey, awsSecretKey));
     }
 
+    @Bean
     public AmazonDynamoDB amazonDynamoDB() {
         return AmazonDynamoDBClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(awsAccessKey, awsSecretKey)))
