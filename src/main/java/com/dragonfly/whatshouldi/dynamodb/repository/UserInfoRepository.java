@@ -11,6 +11,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedList;
 import com.dragonfly.whatshouldi.dynamodb.model.User;
+import com.dragonfly.whatshouldi.dynamodb.model.UserAccount;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +30,14 @@ public class UserInfoRepository {
     public List<User> list() {
         log.info("Entering readAll()");
         PaginatedList<User> results = adhCatalogDynamoDBMapper.scan(User.class,
+                new DynamoDBScanExpression());
+        results.loadAllResults();
+        return results;
+    }
+
+    public List<UserAccount> listUserAccount() {
+        log.info("Entering readAll()");
+        PaginatedList<UserAccount> results = adhCatalogDynamoDBMapper.scan(UserAccount.class,
                 new DynamoDBScanExpression());
         results.loadAllResults();
         return results;
