@@ -24,7 +24,7 @@ public class LoginServiceImpl implements LoginService {
     public boolean isLoginSuccessFull(String userName, String password) {
         AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(awsAccessKey, awsSecretKey)))
-                .withRegion("us-east-2").build();
+                .withRegion("us-east-1").build();
 
         GetItemRequest getItemRequest = new GetItemRequest();
         HashMap<String,AttributeValue> key_to_get =
