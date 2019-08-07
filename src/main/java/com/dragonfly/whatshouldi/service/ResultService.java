@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ResultService {
     ResultRequest getResults(String userName, String searchKey);
+
+    List<String> getResultsBasedOnTags(String userName, String searchKey, String tag);
 }

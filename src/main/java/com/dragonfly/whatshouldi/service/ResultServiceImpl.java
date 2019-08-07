@@ -19,12 +19,11 @@ public class ResultServiceImpl implements ResultService{
     @Value("${aws.service.secretKey}")
     private String awsSecretKey;
 
+
+
     @Override
     public ResultRequest getResults(String userName, String searchKey) {
-        AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(awsAccessKey, awsSecretKey)))
-                .withRegion("us-east-1").build();
-
+        AmazonDynamoDB client = dynamoClient();
         List<AttributeValue> results = results(userName, searchKey, client);
         List<String> resultList = new ArrayList<>();
         for(AttributeValue resultAttributeValue : results) {
@@ -35,6 +34,20 @@ public class ResultServiceImpl implements ResultService{
         resultRequest.setResults(resultList);
         resultRequest.setTags(tags(results, client));
         return resultRequest;
+    }
+
+    @Override
+    public List<String> getResultsBasedOnTags(String userName, String searchKey, String tag) {
+        AmazonDynamoDB client = dynamoClient();
+        List<AttributeValue> results = results(userName, searchKey, client);
+        return resultsSearchBasedOnTags(results, client, tag);
+    }
+
+    private AmazonDynamoDB dynamoClient() {
+        return AmazonDynamoDBClientBuilder.standard()
+                .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(awsAccessKey, awsSecretKey)))
+                .withRegion("us-east-1").build();
+
     }
 
     private List<AttributeValue> results(String userName, String searchKey,  AmazonDynamoDB client) {
@@ -59,19 +72,36 @@ public class ResultServiceImpl implements ResultService{
     }
 
     private List<String> tags(List<AttributeValue> resultList, AmazonDynamoDB client) {
-        HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
-        Condition condition = new Condition()
-                .withComparisonOperator(ComparisonOperator.IN.toString())
-                .withAttributeValueList(resultList);
-        scanFilter.put("result_key", condition);
-        Set<String> tags = new HashSet<>();
-        ScanRequest scanRequest = new ScanRequest("tags").withScanFilter(scanFilter);
+        ScanRequest scanRequest = buildScanRequest(resultList);
         ScanResult scanResult = client.scan(scanRequest);
+        Set<String> tags = new HashSet<>();
         scanResult.getItems().forEach(item->{
             tags.addAll(item.get("tags").getL().stream().map(tag-> {
                 return tag.getS();
             }).collect(Collectors.toSet()));
         });
         return tags.stream().filter(tag->tag!=null).collect(Collectors.toList());
+    }
+
+    private List<String> resultsSearchBasedOnTags(List<AttributeValue> resultList, AmazonDynamoDB client, String tagValue) {
+        ScanRequest scanRequest = buildScanRequest(resultList);
+        ScanResult scanResult = client.scan(scanRequest);
+        Set<String> results = new HashSet<>();
+        scanResult.getItems().forEach(item->{
+            if(item.get("tags").getL().contains(new AttributeValue(tagValue))) {
+                results.add(item.get("result_key").getS());
+            }
+        });
+        return results.stream().filter(tag->tag!=null).collect(Collectors.toList());
+    }
+
+    private ScanRequest buildScanRequest(List<AttributeValue> resultList) {
+        HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
+        Condition condition = new Condition()
+                .withComparisonOperator(ComparisonOperator.IN.toString())
+                .withAttributeValueList(resultList);
+        scanFilter.put("result_key", condition);
+        ScanRequest scanRequest = new ScanRequest("tags").withScanFilter(scanFilter);
+        return scanRequest;
     }
 }
