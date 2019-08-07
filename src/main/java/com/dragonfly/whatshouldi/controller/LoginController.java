@@ -1,6 +1,6 @@
 package com.dragonfly.whatshouldi.controller;
 
-import com.dragonfly.whatshouldi.login.LoginRequest;
+import com.dragonfly.whatshouldi.requests.LoginRequest;
 import com.dragonfly.whatshouldi.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
